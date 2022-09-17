@@ -6,15 +6,36 @@ import Footer from './components/Footer/Footer';
 import Home from './Pages/Home';
 import Quiz from './Pages/Quiz';
 import Result from './Pages/Result';
+import axios from 'axios';
+import Categories from './Data/Catagories';
 
 function App() {
 
-  const [name, setName] = useState("")
+  const [name, setName] = useState("");
+  const [questions, setQuestions] = useState();
+  const [score, setScore] = useState(0);
 
 
-  const fetchQuestions = () => {
+  const fetchQuestions = async (category,difficulty) => {
 
-  }
+    const {data} = await axios.get(`https://opentdb.com/api.php?amount=10${
+      category && `&category=${category}`
+      }${difficulty && `&difficulty=${difficulty}`}&type=multiple`);
+
+      const {results} = data;
+
+      const allQues = results.map((result) => ({
+        question:result.question,
+        correct:result.correct_answer,
+        incorrect:result.incorrect_answers,
+        category:result.category
+      }))
+
+      setQuestions(allQues)
+    }
+    
+    console.log("questionss",questions);
+  
 
   return (
     <Router>
@@ -24,7 +45,13 @@ function App() {
           <Routes>
 
             <Route path='/' exact element={<Home name={name} setName={setName} fetchQuestions={fetchQuestions}/>}/>
-            <Route path='/quiz' exact element={<Quiz />}/>
+            <Route path='/quiz' exact element={<Quiz 
+            name={name}
+            questions={questions}
+            setQuestions={setQuestions}
+            score={score}
+            setScore={setScore}
+            />}/>
             <Route path='/result' exact element={<Result />}/>
             
           </Routes>
