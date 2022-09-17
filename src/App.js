@@ -7,7 +7,6 @@ import Home from './Pages/Home';
 import Quiz from './Pages/Quiz';
 import Result from './Pages/Result';
 import axios from 'axios';
-import Categories from './Data/Catagories';
 
 function App() {
 
@@ -52,7 +51,10 @@ function App() {
             score={score}
             setScore={setScore}
             />}/>
-            <Route path='/result' exact element={<Result />}/>
+            <Route path='/result' exact element={<Result 
+            name={name}
+            score={score}
+            />}/>
             
           </Routes>
 

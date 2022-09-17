@@ -11,8 +11,7 @@ const Question = (
     options,
     correct,
     setScore,
-    score,
-    setQuestions}
+    score,}
 ) => {
 
     const [selected, setSelected] = useState();
@@ -53,7 +52,7 @@ const Question = (
     }
 
     const handleQuit = () => {
-        
+
     }
 
 
